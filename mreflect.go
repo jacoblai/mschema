@@ -26,7 +26,7 @@ type Schema struct {
 type Type struct {
 	// RFC draft-wright-json-schema-00
 	//Version string `json:"$schema,omitempty"` // section 6.1
-	Ref     string `json:"$ref,omitempty"`    // section 7
+	Ref string `json:"$ref,omitempty"` // section 7
 	// RFC draft-wright-json-schema-validation-00, section 5
 	MultipleOf           int              `json:"multipleOf,omitempty"`           // section 5.1
 	Maximum              int              `json:"maximum,omitempty"`              // section 5.2
@@ -49,7 +49,7 @@ type Type struct {
 	AdditionalProperties json.RawMessage  `json:"additionalProperties,omitempty"` // section 5.18
 	Dependencies         map[string]*Type `json:"dependencies,omitempty"`         // section 5.19
 	Enum                 []interface{}    `json:"enum,omitempty"`                 // section 5.20
-	Type                 string           `json:"bsonType,omitempty"`                 // section 5.21
+	Type                 string           `json:"bsonType,omitempty"`             // section 5.21
 	AllOf                []*Type          `json:"allOf,omitempty"`                // section 5.22
 	AnyOf                []*Type          `json:"anyOf,omitempty"`                // section 5.23
 	OneOf                []*Type          `json:"oneOf,omitempty"`                // section 5.24
@@ -251,10 +251,9 @@ func (r *Reflector) reflectStruct(definitions Definitions, t reflect.Type) *Type
 	definitions[t.Name()] = st
 	r.reflectStructFields(st, definitions, t)
 
-
 	return &Type{
 		//Version: Version,
-		Ref:     "#/definitions/" + t.Name(),
+		Ref: "#/definitions/" + t.Name(),
 	}
 }
 
@@ -284,9 +283,9 @@ func (r *Reflector) reflectStructFields(st *Type, definitions Definitions, t ref
 	}
 }
 
-func (t *Type) structKeywordsFromTags(f reflect.StructField){
+func (t *Type) structKeywordsFromTags(f reflect.StructField) {
 	tags := strings.Split(f.Tag.Get("jsonschema"), ",")
-	switch t.Type{
+	switch t.Type {
 	case "string":
 		t.stringKeywords(tags)
 	case "number":
@@ -300,11 +299,11 @@ func (t *Type) structKeywordsFromTags(f reflect.StructField){
 
 // read struct tags for string type keyworks
 func (t *Type) stringKeywords(tags []string) {
-	for _, tag := range tags{
+	for _, tag := range tags {
 		nameValue := strings.Split(tag, "=")
-		if len(nameValue) == 2{
+		if len(nameValue) == 2 {
 			name, val := nameValue[0], nameValue[1]
-			switch name{
+			switch name {
 			case "minLength":
 				i, _ := strconv.Atoi(val)
 				t.MinLength = i
@@ -312,10 +311,15 @@ func (t *Type) stringKeywords(tags []string) {
 				i, _ := strconv.Atoi(val)
 				t.MaxLength = i
 			case "format":
-				switch val{
+				switch val {
 				case "date-time", "email", "hostname", "ipv4", "ipv6", "uri":
 					t.Format = val
 					break
+				}
+			case "enum":
+				ems := strings.Split(val, "|")
+				for _, v := range ems {
+					t.Enum = append(t.Enum, v)
 				}
 			}
 		}
@@ -324,11 +328,11 @@ func (t *Type) stringKeywords(tags []string) {
 
 // read struct tags for numberic type keyworks
 func (t *Type) numbericKeywords(tags []string) {
-	for _, tag := range tags{
+	for _, tag := range tags {
 		nameValue := strings.Split(tag, "=")
-		if len(nameValue) == 2{
+		if len(nameValue) == 2 {
 			name, val := nameValue[0], nameValue[1]
-			switch name{
+			switch name {
 			case "multipleOf":
 				i, _ := strconv.Atoi(val)
 				t.MultipleOf = i
@@ -367,11 +371,11 @@ func (t *Type) numbericKeywords(tags []string) {
 
 // read struct tags for array type keyworks
 func (t *Type) arrayKeywords(tags []string) {
-	for _, tag := range tags{
+	for _, tag := range tags {
 		nameValue := strings.Split(tag, "=")
-		if len(nameValue) == 2{
+		if len(nameValue) == 2 {
 			name, val := nameValue[0], nameValue[1]
-			switch name{
+			switch name {
 			case "minItems":
 				i, _ := strconv.Atoi(val)
 				t.MinItems = i
