@@ -223,8 +223,11 @@ func (r *Reflector) reflectTypeToSchema(definitions Definitions, t reflect.Type)
 	case reflect.Int64, reflect.Uint64:
 		return &Type{Type: "long"}
 
-	case reflect.Float32, reflect.Float64:
+	case reflect.Float64:
 		return &Type{Type: "double"}
+
+	case reflect.Float32:
+		return &Type{Type: "decimal"}
 
 	case reflect.Bool:
 		return &Type{Type: "bool"}

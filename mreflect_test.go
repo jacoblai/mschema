@@ -12,7 +12,7 @@ type User struct {
 	Uid      string    `json:"uid,omitempty" bson:"uid,omitempty" jsonschema:"required,minLength=1,maxLength=20"`
 	Pwd      string    `json:"pwd,omitempty" bson:"pwd,omitempty" jsonschema:"required,minLength=1,maxLength=20"`
 	Name     string    `json:"name,omitempty" bson:"name,omitempty" jsonschema:"required"`
-	Phone    string    `json:"phone,omitempty" bson:"phone,omitempty" jsonschema:"required"`
+	Phone    float32   `json:"phone,omitempty" bson:"phone,omitempty" jsonschema:"required"`
 	Remark   string    `json:"remark,omitempty" bson:"remark,omitempty"`
 	RoleId   []int32   `json:"role,omitempty" bson:"role,omitempty" jsonschema:"-"`
 	Account  float64   `json:"account,omitempty" bson:"account,omitempty"`
