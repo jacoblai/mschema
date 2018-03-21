@@ -291,9 +291,13 @@ func (t *Type) structKeywordsFromTags(f reflect.StructField) {
 	switch t.Type {
 	case "string":
 		t.stringKeywords(tags)
-	case "number":
+	case "double":
 		t.numbericKeywords(tags)
-	case "integer":
+	case "decimal":
+		t.numbericKeywords(tags)
+	case "long":
+		t.numbericKeywords(tags)
+	case "int":
 		t.numbericKeywords(tags)
 	case "array":
 		t.arrayKeywords(tags)
