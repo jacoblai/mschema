@@ -357,6 +357,8 @@ func (t *Type) numbericKeywords(tags []string) {
 			case "exclusiveMinimum":
 				b, _ := strconv.ParseBool(val)
 				t.ExclusiveMinimum = b
+			case "description":
+				t.Description = val
 			}
 		}
 	}
