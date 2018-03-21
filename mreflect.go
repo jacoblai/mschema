@@ -328,6 +328,8 @@ func (t *Type) stringKeywords(tags []string) {
 				for _, v := range ems {
 					t.Enum = append(t.Enum, v)
 				}
+			case "description":
+				t.Description = val
 			}
 		}
 	}
