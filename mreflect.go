@@ -332,6 +332,9 @@ func (t *Type) stringKeywords(tags []string) {
 				t.Description = val
 			}
 		}
+		if tag == "oid" {
+			t.Type = "objectid"
+		}
 	}
 }
 
