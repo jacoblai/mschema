@@ -333,7 +333,7 @@ func (t *Type) stringKeywords(tags []string) {
 			}
 		}
 		if tag == "oid" {
-			t.Type = "objectid"
+			t.Type = "objectId"
 		}
 	}
 }
