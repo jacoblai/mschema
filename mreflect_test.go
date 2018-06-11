@@ -20,6 +20,7 @@ type User struct {
 	CreateAt time.Time     `json:"createat" bson:"createat,omitempty"`
 	Method   string        `json:"method" bson:"method,omitempty" jsonschema:"enum=POST|GET|PUT|DELETE"`
 	Oid      bson.ObjectId `json:"oid,omitempty" bson:"oid,omitempty" jsonschema:"required,oid"`
+	Oids     []bson.ObjectId `json:"oids,omitempty" bson:"oids,omitempty" jsonschema:"required,oids"`
 }
 
 func TestReflectFromType(t *testing.T) {

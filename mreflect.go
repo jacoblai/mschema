@@ -400,6 +400,9 @@ func (t *Type) arrayKeywords(tags []string) {
 				t.UniqueItems = true
 			}
 		}
+		if tag == "oids" {
+			t.Items.Type = "objectId"
+		}
 	}
 }
 
