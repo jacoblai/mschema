@@ -186,6 +186,9 @@ func (r *Reflector) reflectTypeToSchema(definitions Definitions, t reflect.Type)
 			return r.reflectStruct(definitions, t)
 		}
 
+	case reflect.Array:
+		return &Type{Type: "objectId"}
+
 	case reflect.Map:
 		rt := &Type{
 			Type: "object",
