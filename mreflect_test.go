@@ -1,7 +1,7 @@
 package mschema
 
 import (
-	"github.com/pquerna/ffjson/ffjson"
+	"github.com/bytedance/sonic"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"testing"
 	"time"
@@ -27,6 +27,6 @@ func TestReflectFromType(t *testing.T) {
 	u := &User{}
 	flect := &Reflector{ExpandedStruct: true, RequiredFromJSONSchemaTags: true, AllowAdditionalProperties: true}
 	sc := flect.Reflect(u)
-	bts, _ := ffjson.Marshal(&sc)
+	bts, _ := sonic.Marshal(&sc)
 	t.Log(string(bts))
 }
